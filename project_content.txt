@@ -1,0 +1,582 @@
+
+
+Assessment Brief
+
+The main purpose of the website is to make it so university staff can advertise courses available at the university within subject areas. There will need to be a secure administration area where university staff are able to login and add courses which will then appear on the public facing website.
+
+You have two tasks:
+Implement the requested functionality on the website
+Build the website in such a way that it is easy to maintain going forwards. Additional marks are available for building the website using reusable components that could be used on a future second website unrelated to the university or even an educational establishment.
+The staff who will be using the website have basic computer skills but are not programmers. It is vitally important that they can amend the content of the website without writing any code.
+The product manager has chosen to follow a kanban style development process, and you have been assigned the following tickets. A senior engineer has outlined some implementation details as a suggested approach.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ticket NMP-0001: User accounts Background
+This is a new website we’re setting up. The HTML/CSS is attached and as a basic functionality we’ll need a way for staff members to log in in order to make future changes to the website. Create a page, using the supplied layout, that allows staff members to log in to an account using a username/password.
+
+We’ll also need to be able to add/remove new staff members. There should be a "superadmin” account which can
+add/remove new staff members. Normal (non “superadmin”) users should not have access to alter staff accounts
+
+Acceptance Criteria
+
+A superadmin can log in and add new accounts
+Once a new account is added that new user can log in to the website and add subject areas (NMP-0002) and courses (NMP-0003).
+A superadmin can delete accounts
+The superadmin account cannot be deleted
+Accounts that are not the superadmin should not be able to add/remove accounts
+
+Implementation details
+
+As there are two different user roles you’ll need to ensure that the roles superadmin/normal user are tracked in the database and upon log in.
+
+Make sure you consider password security when implementing this ticket, there should be no passwords in the code. Also consider building the solution in such a way that new roles with different access levels can easily be added in future
+
+Using entities and an ORM will make your task a lot easier. Try to combine add and edit forms to minimise the work required.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ticket NMP-0002: Add/display subject areas Background
+[ Depends on NMP-0001 ]
+The primary purpose of the website is to advertise courses. Each course is placed within a subject area such as “Computing”, “Education”, “Biomedical Science”, etc. Before courses can be added we’ll need a way to group them by subject area on the website.
+An admin user (as outlined in ticket NMP-0001) should be able to log in and then once logged in be able to add a new subject area which should appear on the “Subject Areas” drop down on the website (The HTML/CSS has already been provided). For this ticket the links should appear in the menu and go to a page where the courses will eventually appear.
+
+Clicking “Software Engineering” should go to a page which has a heading of “Software Engineering”, clicking “History” should go to a page with a heading of “History”, etc. That page will then show a list of courses for the chosen subject area. The work for adding courses is outlined in NMP-0003. We’ll also need to be able to edit the subject area name or delete it entirely in cases where the university no longer offers that subject.
+
+Acceptance criteria
+
+Logged in admin users can add new subject areas and rename existing subject areas or delete them entirely.
+Users who are not logged in should not be able to add/edit/delete subject areas.
+Once a subject area is added it appears in the menu as a clickable link
+Clicking one of the subject areas should go to a page (within the standard layout provided) that has a
+heading of the chosen subject area. E.g. clicking “History” shows a page with a heading that says “History”
+
+Implementation detail
+
+Avoid using separate add/edit pages if possible. The solution will need to support any number of subject areas.
+
+There will need to be a way to see the existing subject areas as a logged in admin, with the option to edit or delete them.
+Using entities and an ORM will make your task a lot easier. Try to combine add and edit forms to minimise the work required.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ticket NMP-0003: Add/display courses Background
+[ Depends on NMP-0002 ]
+The primary purpose of the website is to advertise courses. In NMP-0002 the functionality for adding subject areas was added. Once a subject area can be added, courses can be assigned to it.
+An admin area should be able to log in and add a course. Each course should:
+Be assigned to a subject area. For example “Software Engineering” can be added under the “Computing”
+subject area.
+Have a title e.g. “Software Engineering”
+Have a length in years e.g. 2 years
+Have a type for example “MSc”, “BSc”, “MA”, “BA”
+Have a description of the course
+Have a list of modules that are taught on the course. It should show the module code, module title and a short description of the module.
+
+When a course is added it should be able to be seen on the subject area page with all the details provided (See subject-area.html from the supplied HTML/CSS).
+Acceptance criteria
+Courses can be added with all the data listed above
+Once a course is added it can be added or updated.
+It should be possible to move the course from one subject area to another
+After a course has been added it should be visible on the public side of the website on the relevant subject area page.
+
+Implementation detail
+
+Avoid using separate add/edit pages if possible. The solution will need to support any number of courses. There will need to be a way to see the existing subject areas as a logged in admin, with the option to edit or delete them.
+
+Some modules will inevitably exist on more than one course. Consider handling this in a smarter way than a single database column for the list of modules with the titles and descriptions.
+Using entities and an ORM will make your task a lot easier. Try to combine add and edit forms to minimise the work required.
+
+
+
+
+
+
+
+
+
+
+
+Ticket NMP-0004: Enquiries Background
+There’s a “Make an enquiry” link at the top of the website with a sample form in enquiry.html provided.
+
+We’d like people to be able to make an enquiry via the website by providing the requested information:
+
+Name of person making enquiry
+Email address
+Phone number (optional)
+Course name
+Enquiry text
+
+
+When the potential student submits an enquiry it should be visible to admins once they are logged in. All the details about the enquiry will need to be visible. Someone at the university will then respond to the enquiry via email or phone. This doesn’t need to be handled to the website, however we will need to track which enquiries have been responded to.
+
+To track historical enquiries we will need to be able see list of pending enquiries (yet to be responded to) and also see those which have already been responded to and who responded to it based on the user who marked the enquiry as responded to.
+
+Acceptance criteria
+
+Anyone viewing the website can submit an enquiry
+Submitted enquiries are visible to admins as long as they are logged in
+Enquires can be marked as “Responded to” and it logs who responded to the enquiry based on
+who’s logged in
+Have a way to show pending enquiries (those which have not been responded to)
+Have a way to show responded to enquiries
+
+Implementation detail
+
+Since the two lists (pending/responded to) are basically the same it shouldn’t require two different
+pages for that feature.
+
+The “who responded to the enquiry” task should use the logged in user only for security.
+
+Using entities and an ORM will make your task a lot easier.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ticket NMP-0005: Course search Background
+After implementing NMP-0003 it’s possible to see a list of courses based on selecting a subject area.
+
+We’d also like to be able to search for a course based on any of the following critiera:
+
+Subject area
+Type (BSc, MA, MSc, etc)
+Duration in years by specifying a minimum number of years and a maximum number of years.
+
+A user of the website should be able to enter one or all of the fields above. For example they could select “BSc”, press search and see a list of all the BSc courses. Or choose “Computing” as a subject area, “Type” set to “BSc” and 2 year minimum, 3 year maximum and see all the computing BSc courses that are 2-3 years.
+
+The user should be able to leave any of the criteria blank and select which filters they like
+
+Acceptance criteria
+
+Users can search by type
+Users can search by subject area
+Users can search by duration
+Users can search by entering one, two or all three criteria
+
+Implementation detail
+
+The list of courses in a subject area and list of courses as search results will be very similar. Reuse as much of the subject area page as possible.
+
+Do the searching in the database, filtering records using PHP is much less efficient than the database.
+
+If you’re using an ORM, extend the ORM to allow searching on multiple fields if needed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ticket NMP-0006: Part time courses Background
+Some courses can be completed part time. We’d like a way to advertise this on the website.
+
+When adding/editing a course it should be possible to mark the course as having a part time option.
+
+On the public facing website display “Can be completed part time? Yes” or “Can be completed part time? No”
+along with displaying the rest of the course information.
+
+The search functionality from NMP-0005 should also be expanded to allow searching for courses that have a part time option
+
+Acceptance criteria
+
+Add an option to mark a course as having a part time option when adding and editing a course
+Display whether a course can be completed part time on the course information on the list when clicking the subject area
+Display whether a course can be completed part time on the course information on the list in the search results from NMP-0005
+Update the search functionality from NMP-0005 with an option to only show courses which can be completed part time
+
+
+Implementation detail
+
+Update the add/edit functionality for courses to add the new option. We’ll need to make this backward compatible with courses that were added before this change. For existing courses, “part time” can be assume as no, then admins can go ahead and add it in future once the feature is implemented.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ticket NMP-0007: Pagination Background
+As the website grows and more courses are added, having all the courses in a subject area, or search results page, will end up being a very long page with a lot of results.
+
+For better usability it would be better if these were displayed 10 at a time across different pages (as seen on a lot of websites e.g. google)
+
+When choosing “Computing” it should show the first 10 courses, then page numbers which are clickable. Clicking
+page “2” should show courses 11-20, page 3 should show courses
+
+Acceptance criteria
+
+Display 10 courses on the subject area page with a list of page numbers which can be clicked on and navigated to
+Add the same pagination to the search results page
+
+
+Implementation detail
+
+This is a case where combining the subject area list and search result list will make this task a lot easier
+if you haven’t done it already.
+
+Make sure to do this in the database, selecting all the records into memory and then grouping them into pages in PHP is very inefficient. Use `LIMIT` and `OFFSET` in your queries.
+
+For testing this, rather than adding dozens of courses you could set the number of courses per page to 2 instead of 10 and check the page links appear as required. Remember to set the threshold to 10 before finalising the project though.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Deliverables
+A very short report in markdown format that covers the following:
+A List of each ticket and assessment criteria. For each acceptance criteria:
+The path to the file containing that feature
+The line number that feature is on
+The URL to the admin login page e.g. `https://as1.v.je/adminlogin.php`
+A valid username/password to log in to the website as an the superadmin account
+
+A zip file containing:
+All source code
+The report from (1)
+database.sql generated from the server. Run `docker compose down` and this will be generated in the websites directory.
+Source code word document. Copy and paste all php files into a single word document and upload it to turnitin.
+
+Learning Outcomes aligned to this Assessment:
+On successful completion of this assessment, you will be able to:
+Design and implement dynamic applications for the Internet
+
+Implement modern best practice development techniques to develop a website
+
+Explain and assess the importance of good design criteria in Internet multimedia systems
+
+Make, justify and implement decisions following careful evaluation of options for website development
+Synthesize information by bringing together in a coherent way various aspects of an issue and present interpretations clearly and logically
+Evaluate alternative approaches to problem solving and justify proposed recommendations
+
+
+
+Module Code] [Assessment Code]: Undergraduate Marking Rubric
+
+
+
+
+
+
+
+--- TABLE ---
+Module title: | Web Programming | Module code: | CSY2089
+Assessment
+code/title: | AS1 | Assessment
+weighting | 75%
+Submission date: | 22/01/2026 15:00 | Feedback date: | 19/02/2026
+Module Leader: | Tom Butler | Resit date: | 22/03/2026
+Assessment Task: | Assessment Task: | Assessment Task: | Assessment Task:
+Submission requirements
+If you have used any code that you did not write you must provide a reference, with a link where applicable as a comment at the location you have used code you did not produce yourself.
+You must supply both items of assessment and upload them to the correct submission points. All work must be uploaded to turnitin
+Source code (zip file). The marker must be able to download and run your code.
+Source code word document (uploaded to turnitin)
+This is an individual assignment, not group work. Submitting the same or partially the same code as another student will be deemed academic misconduct and the suspected academic misconduct process will be strictly adhered to.
+The website must use the layout supplied.
+The website must be built using the docker environment we use in class. The marker must be able to run `docker-compose up` and access your website without any additional steps needed to get it running.
+You must only submit work you wish to be marked. If your zip file contains more than one version of your code it will automatically be graded 5%. This is to avoid complaints that the “wrong” version of the code was marked. Do not include multiple files such as:
+as1
+as1new
+as1backup
+- [as1_studentnumber]
+Doing do will result in an instant 5% grade as the marker cannot be expected to guess which is your correct submission Failure to follow the submission requirements will result in an instant fail grade of 5%.
+
+
+
+
+
+
+
+
+
+
+Setting the scene:
+
+The University of Northampton wants a new website. An in-house designer has created the HTML and CSS. This has been signed off by the university and meets the marketing criteria and must be used for
+the website. This is not a design module; there are no marks for changing or improving the look of the website. | Submission requirements
+If you have used any code that you did not write you must provide a reference, with a link where applicable as a comment at the location you have used code you did not produce yourself.
+You must supply both items of assessment and upload them to the correct submission points. All work must be uploaded to turnitin
+Source code (zip file). The marker must be able to download and run your code.
+Source code word document (uploaded to turnitin)
+This is an individual assignment, not group work. Submitting the same or partially the same code as another student will be deemed academic misconduct and the suspected academic misconduct process will be strictly adhered to.
+The website must use the layout supplied.
+The website must be built using the docker environment we use in class. The marker must be able to run `docker-compose up` and access your website without any additional steps needed to get it running.
+You must only submit work you wish to be marked. If your zip file contains more than one version of your code it will automatically be graded 5%. This is to avoid complaints that the “wrong” version of the code was marked. Do not include multiple files such as:
+as1
+as1new
+as1backup
+- [as1_studentnumber]
+Doing do will result in an instant 5% grade as the marker cannot be expected to guess which is your correct submission Failure to follow the submission requirements will result in an instant fail grade of 5%.
+
+
+
+
+
+
+
+
+
+
+Setting the scene:
+
+The University of Northampton wants a new website. An in-house designer has created the HTML and CSS. This has been signed off by the university and meets the marketing criteria and must be used for
+the website. This is not a design module; there are no marks for changing or improving the look of the website. | Submission requirements
+If you have used any code that you did not write you must provide a reference, with a link where applicable as a comment at the location you have used code you did not produce yourself.
+You must supply both items of assessment and upload them to the correct submission points. All work must be uploaded to turnitin
+Source code (zip file). The marker must be able to download and run your code.
+Source code word document (uploaded to turnitin)
+This is an individual assignment, not group work. Submitting the same or partially the same code as another student will be deemed academic misconduct and the suspected academic misconduct process will be strictly adhered to.
+The website must use the layout supplied.
+The website must be built using the docker environment we use in class. The marker must be able to run `docker-compose up` and access your website without any additional steps needed to get it running.
+You must only submit work you wish to be marked. If your zip file contains more than one version of your code it will automatically be graded 5%. This is to avoid complaints that the “wrong” version of the code was marked. Do not include multiple files such as:
+as1
+as1new
+as1backup
+- [as1_studentnumber]
+Doing do will result in an instant 5% grade as the marker cannot be expected to guess which is your correct submission Failure to follow the submission requirements will result in an instant fail grade of 5%.
+
+
+
+
+
+
+
+
+
+
+Setting the scene:
+
+The University of Northampton wants a new website. An in-house designer has created the HTML and CSS. This has been signed off by the university and meets the marketing criteria and must be used for
+the website. This is not a design module; there are no marks for changing or improving the look of the website. | Submission requirements
+If you have used any code that you did not write you must provide a reference, with a link where applicable as a comment at the location you have used code you did not produce yourself.
+You must supply both items of assessment and upload them to the correct submission points. All work must be uploaded to turnitin
+Source code (zip file). The marker must be able to download and run your code.
+Source code word document (uploaded to turnitin)
+This is an individual assignment, not group work. Submitting the same or partially the same code as another student will be deemed academic misconduct and the suspected academic misconduct process will be strictly adhered to.
+The website must use the layout supplied.
+The website must be built using the docker environment we use in class. The marker must be able to run `docker-compose up` and access your website without any additional steps needed to get it running.
+You must only submit work you wish to be marked. If your zip file contains more than one version of your code it will automatically be graded 5%. This is to avoid complaints that the “wrong” version of the code was marked. Do not include multiple files such as:
+as1
+as1new
+as1backup
+- [as1_studentnumber]
+Doing do will result in an instant 5% grade as the marker cannot be expected to guess which is your correct submission Failure to follow the submission requirements will result in an instant fail grade of 5%.
+
+
+
+
+
+
+
+
+
+
+Setting the scene:
+
+The University of Northampton wants a new website. An in-house designer has created the HTML and CSS. This has been signed off by the university and meets the marketing criteria and must be used for
+the website. This is not a design module; there are no marks for changing or improving the look of the website.
+
+--- TABLE ---
+Learning Outcomes are available on the Module Specification for the module
+
+
+
+
+A. Assessment Guidance:
+Reading List: You will find a link to your online reading list on NILE in the “About this module”
+section.
+
+
+
+
+
+
+
+Academic Practice support
+The Skills Hub is a central repository where you will find a range of support for your study and assessments: https://skillshub.northampton.ac.uk/
+Notes for Staff: Include relevant academic skills links
+Feedback:
+Feedback should be received within 20 working days (4 weeks)
+
+An announcement will be sent out via NILE to inform you of when feedback is available.
+
+--- TABLE ---
+
+
+--- TABLE ---
+Learning Outcomes addressed through this Assessment. | No submission / no evidence
+
+
+Work submitted is of no academic value / nothing submitted. | Fail
+
+5-39%
+
+Evidence included or provided but missing some very important aspects. | Pass (Third)
+40-49%
+
+Of satisfactory quality, demonstrating evidence of achieving the requirements of the learning outcomes. | Commended (Lower Second)
+50-59%
+
+Of sound quality, demonstrating evidence which is sufficient and appropriate to the task or activity. | Merit
+(Upper Second) 60-69%
+Of high quality, demonstrating evidence which is rigorous and convincing, appropriate to the task or activity. | Distinction (First)
+70-100%
+
+Of very high quality, demonstrating evidence, which is strong, robust and consistent, appropriate to the task or activity.
+Learning outcomes A and E: Functionality (50%)
+Note: These numbers are indicative and marks may be lost if a feature is incomplete, implemented with bugs or in a way that is difficult to use or breaks existing functionality on the website | No submission or no submission of merit | Fewer 60% of acceptance criteria across all tickets are met OR basic functionality does not work; OR it is not possible for prospective students to navigate successfully around the website | 70% of acceptance criteria across all tickets are met | 80% of acceptance criteria across all tickets are met | 90% of acceptance criteria across all tickets are met | 100% of acceptance criteria across all tickets are met
+
+--- TABLE ---
+ | No submission or no submission of merit | No attempt has been made to reduce repetition in the code. E.g. code is repeated across multiple files, adding new pages requires a copy/paste approach | Basic repetition is removed: HTML code is moved into its own files, adding a menu item or changing database credentials should require a change to a single file only | 50% for functionality plus:
+Everything for Pass (Third) for code quality and one or more of:
+password security considered
+No repeated bootstrap code (e.g. requires statements) at the top of each file
+Separation of concerns: Use of template files with no queries or database logic in templates
+No separate add/edit pages | 60% for functionality plus:
+Everything for 50% plus single entry point and controllers for all pages on the website.
+Everything for Commended (Lower Second) code quality plus:
+Use of objects and classes.
+Database abstraction (no hardcoded queries)
+Classes are loaded via an autoloader
+Everything goes through a single entry point
+Classes are in namespaces | 70% for functionality plus:
+
+Everything for Merit (Upper Second) code quality plus:
+use of controllers with one
+function per “page”
+Code is written so that sections can be moved to a different website without modifying a single character in the file
+Learning outcome B, C, D and F: Code quality (50%).
+
+Important: Code quality
+% is capped by % of functionality. A broken but well coded website is not useful!
+Example: You get 65% on functionality, the maximum you can get for code quality is 65%. This is to prevent submitting something with 1 completed feature but good code and being awarded a pass. Ensure you concentrate on getting the functionality complete.
+Note: the features in the columns are indicative as the marks are cumulative: Marks will be awarded based on how well you do something, and you may include some but not all features from all columns which will affect the grade | No submission or no submission of merit | No attempt has been made to reduce repetition in the code. E.g. code is repeated across multiple files, adding new pages requires a copy/paste approach | Basic repetition is removed: HTML code is moved into its own files, adding a menu item or changing database credentials should require a change to a single file only | 50% for functionality plus:
+Everything for Pass (Third) for code quality and one or more of:
+password security considered
+No repeated bootstrap code (e.g. requires statements) at the top of each file
+Separation of concerns: Use of template files with no queries or database logic in templates
+No separate add/edit pages | 60% for functionality plus:
+Everything for 50% plus single entry point and controllers for all pages on the website.
+Everything for Commended (Lower Second) code quality plus:
+Use of objects and classes.
+Database abstraction (no hardcoded queries)
+Classes are loaded via an autoloader
+Everything goes through a single entry point
+Classes are in namespaces | 70% for functionality plus:
+
+Everything for Merit (Upper Second) code quality plus:
+use of controllers with one
+function per “page”
+Code is written so that sections can be moved to a different website without modifying a single character in the file
